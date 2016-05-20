@@ -1,5 +1,10 @@
 var url = require('url');
 
+/**
+ * Helpers for controllers
+ *
+ * @type {{getQuery: getQuery, writeJsonp: writeJsonp}}
+ */
 var utils = {
     /**
      * Get array of query parameters from the request
