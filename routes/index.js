@@ -12,7 +12,6 @@ router.get("/test/server", function (req, res, next) {
    test.server(req, res);
 });
 
-
 router.get("/test/db", function (req, res, next) {
     test.db(req, res);
 });

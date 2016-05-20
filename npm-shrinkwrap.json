@@ -1015,6 +1015,11 @@
       "from": "pinkie-promise@>=2.0.0 <3.0.0",
       "resolved": "https://registry.npmjs.org/pinkie-promise/-/pinkie-promise-2.0.1.tgz"
     },
+    "port": {
+      "version": "0.8.1",
+      "from": "port@*",
+      "resolved": "https://registry.npmjs.org/port/-/port-0.8.1.tgz"
+    },
     "process-nextick-args": {
       "version": "1.0.7",
       "from": "process-nextick-args@>=1.0.6 <1.1.0",
