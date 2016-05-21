@@ -1,21 +1,32 @@
 var port = require('port');
 
-var khl4a = new port({
-    'host': '192.168.1.146',
-    'write': 13001
-}).on('connect', function(){
-    this.write('Hello khl4a;\n');
-});
-khl4a.connect();
+/**
+ * Initialize connection to pd patches
+ */
+if (!process.env.NO_PD) {
+    var khl4a = new port({
+        'host': '192.168.1.146',
+        'write': 13001
+    }).on('connect', function () {
+            this.write('Hello khl4a;\n');
+        });
+    khl4a.connect();
 
-var khl4b = new port({
-    'host': '192.168.1.140',
-    'write': 13000
-}).on('connect', function(){
-    this.write('Hello khl4b;\n');
-});
-khl4b.connect();
+    var khl4b = new port({
+        'host': '192.168.1.140',
+        'write': 13000
+    }).on('connect', function () {
+            this.write('Hello khl4b;\n');
+        });
+    khl4b.connect();
+}
 
+/**
+ * Play notes n at velocities v
+ *
+ * @param notes
+ * @param velocities
+ */
 var play = function(notes,velocities) {
 
     if (notes.length == velocities.length)
@@ -29,15 +40,13 @@ var play = function(notes,velocities) {
             if (notes[n] in n1) {  n1[notes[n]] = velocities[n]/127; }
             if (notes[n] in n2) {  n2[notes[n]] = velocities[n]/127; }
         }
-        //console.log(n1);
-        //console.log(n2);
     }
 
     for (var note in n1) {
-        khl4a.write(note + " " + n1[note] + ";\n");
+        khl4a && khl4a.write(note + " " + n1[note] + ";\n");
     }
     for (var note in n2) {
-        khl4b.write(note + " " + n2[note] + ";\n");
+        khl4b && khl4b.write(note + " " + n2[note] + ";\n");
     }
 
 }
