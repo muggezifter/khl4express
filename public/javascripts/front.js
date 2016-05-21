@@ -12,7 +12,7 @@
 
     var play = function (now_playing) {
         console.log(speedfactor);
-        $.getJSON("http://localhost:8080/play?callback=?").done(function (data) {
+        $.getJSON("/play?callback=?").done(function (data) {
             console.log(data);
         });
         khl4map.initializeMaps();
@@ -32,7 +32,7 @@
                     } else {
                         clearInterval(playing_interval);
                         // console.log("end");;
-                        $.getJSON("http://localhost:8080/play?callback=?").done(function (data) {
+                        $.getJSON("/play?callback=?").done(function (data) {
                             console.log(data);
                         });
                     }
@@ -54,7 +54,7 @@
         var q = "";
         for (var n in node.chord) {
             q += "n=" + node.chord[n].note + "&v=" + vol*(node.chord[n].velocity) + "&";
-            $.getJSON("http://localhost:8080/play?" + q + "&callback=?").done(function (data) {
+            $.getJSON("/play?" + q + "&callback=?").done(function (data) {
                 console.log(data);
             });
 
@@ -79,7 +79,7 @@
     var changePlay = function (id) {
         switch (id) {
             case "pause":
-                $.getJSON("http://localhost:8080/play?callback=?").done(function (data) {
+                $.getJSON("/play?callback=?").done(function (data) {
                     console.log(data);
                 });
                 if (playing_interval) {
@@ -88,7 +88,7 @@
                 console.log("p");
                 break;
             case "live":
-                $.getJSON("http://localhost:8080/play?callback=?").done(function (data) {
+                $.getJSON("/play?callback=?").done(function (data) {
                     console.log(data);
                 });
                 if (playing_interval) {
@@ -97,7 +97,7 @@
                 console.log("l");
                 break;
             default:
-                $.getJSON("http://localhost:8080/recording/find?rec_id=" + id + "&callback=?").done(function (data) {
+                $.getJSON("/recording/find?rec_id=" + id + "&callback=?").done(function (data) {
                     now_playing = data[0].nodes;
                     play(now_playing);
                 });
@@ -106,7 +106,7 @@
 
     };
     var getList = function () {
-        $.getJSON("http://localhost:8080/recording/list?callback=?").done(function (data) {
+        $.getJSON("/recording/list?callback=?").done(function (data) {
             recordings = data;
             var i = recordings.length;
             while (recordings[--i]) {
