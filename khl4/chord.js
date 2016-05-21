@@ -1,9 +1,6 @@
 var geographicLib = require('geographiclib');
-
 var geod = geographicLib.Geodesic.WGS84;
-
 var grids = require('./grids');
-
 var grid = grids.rotterdam;
 
 /**
@@ -14,7 +11,7 @@ var grid = grids.rotterdam;
  *
  * @param lat
  * @param lon
- * @param tim
+ * @param time
  * @param debug
  * @returns {Array}
  */
@@ -38,17 +35,19 @@ var compute = function (lat, lon, time, debug) {
             point.velocity = (key > 2 || point.distance > grid.size)
                 ? 0
                 // distance to midi velocity http://www.analyzemath.com/parabola/three_points_para_calc.html
-                : Math.floor(-(13/675000) * point.distance * point.distance)-((59/4500) * point.distance )+127;
+                : Math.floor(-(13 / 675000) * point.distance * point.distance) - ((59 / 4500) * point.distance ) + 127;
             return point;
         });
 
     return (debug) ? result : result.slice(0, 3) // send only necessary data to app
         .map(function (point, key) {
-            return {note: point.note,  distance: point.distance, velocity: point.velocity};
+            return {note: point.note, distance: point.distance, velocity: point.velocity};
         })
         .sort(function (a, b) {
             return a.note - b.note;
         });
 }
 
-module.exports.compute = compute;
+module.exports = {
+    compute: compute
+};
