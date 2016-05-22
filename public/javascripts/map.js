@@ -1,7 +1,6 @@
 var khl4map = {
     map: null,
     bike: null,
-    markers: {},
     markers: [
         ['E', 51.92837, 4.41509],
         ['G', 51.92837, 4.44777],
@@ -134,5 +133,4 @@ var khl4map = {
 };
 
 khl4map.initializeMaps();
-//khl4map.addBike("51.9199095","4.4350533");
-//setTimeout(function(){khl4map.removeBike();},10000);
+
