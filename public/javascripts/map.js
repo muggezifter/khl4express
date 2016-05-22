@@ -35,14 +35,15 @@ var khl4map = {
 
 
     initializeMaps: function () {
+
         var myOptions = {
-            mapTypeId: google.maps.MapTypeId.ROADMAP,
-            //mapTypeId: google.maps.MapTypeId.SATTELITE,
+            //mapTypeId: google.maps.MapTypeId.ROADMAP,
+            mapTypeId: google.maps.MapTypeId.SATELLITE,
             //mapTypeId: google.maps.MapTypeId.HYBRID,
             mapTypeControl: true
         };
         this.map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-
+       // this.map.setMapTypeId(google.maps.MapTypeId.ROADMAP);
         var infowindow = new google.maps.InfoWindow();
         var marker, i;
         var bounds = new google.maps.LatLngBounds();
@@ -53,8 +54,8 @@ var khl4map = {
             this.p02, this.p05, this.p01, this.p04];
 
 
-        var labels = ["E","G","A#","C#","B","D","F","G#","F#","A","C","D#"];
-        var labelIndex = 0;
+       // var labels = ["E","G","A#","C#","B","D","F","G#","F#","A","C","D#"];
+       // var labelIndex = 0;
 
         for (i = 0; i < this.markers.length; i++) {
             var pos = new google.maps.LatLng(
