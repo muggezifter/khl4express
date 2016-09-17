@@ -1,5 +1,5 @@
 # khl4express
-Version of the khl4 server using the express framework
+This is the server for the [KHL4](https://github.com/muggezifter/khl4express/wiki/KHL4) project
 
 Start the server with `npm start`
 
