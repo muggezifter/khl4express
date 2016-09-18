@@ -2,19 +2,19 @@
 
 (function () {
     var now_playing = null;
-
     var recordings = [];
+    var grids = [];
     var interval = 10;
-    var now_playing;
     var playing_interval;
     var speedfactor = 1000;
     var vol= 0.6;
+    var khl4map = createMap();
 
     var play = function (now_playing) {
-        console.log(speedfactor);
         $.getJSON("/play?callback=?").done(function (data) {
             console.log(data);
         });
+
         khl4map.initializeMaps();
         setTimeout(function () {
             if (playing_interval) {
@@ -50,7 +50,7 @@
 
     var playNode = function (node) {
         display(node);
-        khl4map.addBike(node.lat, node.lon);
+        khl4map.addMark(node.lat, node.lon);
         var q = "";
         for (var n in node.chord) {
             q += "n=" + node.chord[n].note + "&v=" + vol*(node.chord[n].velocity) + "&";
@@ -107,17 +107,29 @@
     };
     var getList = function () {
         $.getJSON("/recording/list?callback=?").done(function (data) {
-            recordings = data;
-            var i = recordings.length;
-            while (recordings[--i]) {
-                $("select#play_select")
-                    .append($('<option>', { value: recordings[i].recording_id })
-                        .text((recordings[i].description)
-                            ? (recordings[i].description)
-                            : recordings[i].recording_id));
-
-            }
+            //recordings = data;
+            addOptions("select#play_select",data,"description", "recording_id");
         });
+    };
+
+    var getGrids = function() {
+        $.getJSON("/grid/list?callback=?").done(function (data) {
+            //grids = data;
+            addOptions("select#grid_select",data,"name", "_id");
+        });
+    };
+
+    var addOptions = function(select,data,name,value)
+    {
+        var i = data.length;
+        while (data[--i]) {
+            $(select)
+                .append($('<option>', { value: data[i][value] })
+                    .text((data[i][name])
+                        ? (data[i][name])
+                        : data[i][value]));
+
+        }
     };
 
     $("#acc input:checkbox").change(
@@ -132,6 +144,7 @@
 
 
 
+    getGrids();
     getList();
 
 })();
