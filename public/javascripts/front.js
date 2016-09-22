@@ -2,7 +2,8 @@
 
 (function () {
     var currentTrack = null;
-    var grid = null;
+    var currentGrid = null;
+    var logInConsole = true;
     var interval = 10;
     var playIntervalId;
     var speedfactor = 1000;
@@ -11,10 +12,10 @@
 
     var play = function (currentTrack) {
         $.getJSON("/play?callback=?").done(function (data) {
-            console.log(data);
+            logInConsole && console.log(data);
         });
 
-        khl4map.initializeMaps();
+        khl4map.initializeMaps(currentGrid);
         setTimeout(function () {
             if (playIntervalId) {
                 clearInterval(playIntervalId);
@@ -32,7 +33,7 @@
                         clearInterval(playIntervalId);
                         // console.log("end");;
                         $.getJSON("/play?callback=?").done(function (data) {
-                            console.log(data);
+                            logInConsole && console.log(data);
                         });
                     }
 
@@ -54,7 +55,7 @@
         for (var n in node.chord) {
             q += "n=" + node.chord[n].note + "&v=" + vol*(node.chord[n].velocity) + "&";
             $.getJSON("/play?" + q + "&callback=?").done(function (data) {
-                console.log(data);
+                logInConsole && console.log(data);
             });
         }
     }
@@ -76,21 +77,21 @@
         switch (id) {
             case "pause":
                 $.getJSON("/play?callback=?").done(function (data) {
-                    console.log(data);
+                    logInConsole && console.log(data);
                 });
                 if (playIntervalId) {
                     clearInterval(playIntervalId);
                 }
-                console.log("p");
+                logInConsole && console.log("pause");
                 break;
             case "live":
                 $.getJSON("/play?callback=?").done(function (data) {
-                    console.log(data);
+                    logInConsole &&console.log(data);
                 });
                 if (playIntervalId) {
                     clearInterval(playIntervalId);
                 }
-                console.log("l");
+                logInConsole && console.log("live");
                 break;
             default:
                 $.getJSON("/recording/find?rec_id=" + id + "&callback=?").done(function (data) {
@@ -103,8 +104,11 @@
     };
 
     var gridsSelectChangeHandler = function (id) {
-        khl4map.initializeMaps();
-        alert(id);
+        $.getJSON("/grid/find?grid_id=" + id + "&callback=?").done(function (data) {
+           currentGrid = data[0];
+           logInConsole && console.log(currentGrid);
+           khl4map.initializeMaps(currentGrid);
+        });
     }
 
 
