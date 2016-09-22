@@ -1,36 +1,35 @@
 "use strict";
 
 (function () {
-    var now_playing = null;
-    var recordings = [];
-    var grids = [];
+    var currentTrack = null;
+    var grid = null;
     var interval = 10;
-    var playing_interval;
+    var playIntervalId;
     var speedfactor = 1000;
     var vol= 0.6;
     var khl4map = createMap();
 
-    var play = function (now_playing) {
+    var play = function (currentTrack) {
         $.getJSON("/play?callback=?").done(function (data) {
             console.log(data);
         });
 
         khl4map.initializeMaps();
         setTimeout(function () {
-            if (playing_interval) {
-                clearInterval(playing_interval);
+            if (playIntervalId) {
+                clearInterval(playIntervalId);
             }
-            // console.log(now_playing);
+            // console.log(currentTrack);
             var index = 0;
-            if (now_playing.length > 2) {
-                interval = (now_playing[now_playing.length - 1].timestamp - now_playing[0].timestamp) / now_playing.length;
-                playNode(now_playing[0])
-                playing_interval = setInterval(function () {
-                    if (now_playing[++index]) {
-                        playNode(now_playing[index]);
+            if (currentTrack.length > 2) {
+                interval = (currentTrack[currentTrack.length - 1].timestamp - currentTrack[0].timestamp) / currentTrack.length;
+                playNode(currentTrack[0])
+                playIntervalId = setInterval(function () {
+                    if (currentTrack[++index]) {
+                        playNode(currentTrack[index]);
                         // console.log(index);
                     } else {
-                        clearInterval(playing_interval);
+                        clearInterval(playIntervalId);
                         // console.log("end");;
                         $.getJSON("/play?callback=?").done(function (data) {
                             console.log(data);
@@ -42,14 +41,14 @@
         }, 1000);
     }
 
-    var display = function (node) {
+    var displayInfo = function (node) {
         $("#display").text(
-            convert(node.timestamp) + " lon:" + parseFloat(node.lon).toPrecision(8) + " lat:" + parseFloat(node.lat).toPrecision(9)
+            formatDate(node.timestamp) + " lon:" + parseFloat(node.lon).toPrecision(8) + " lat:" + parseFloat(node.lat).toPrecision(9)
         );
     }
 
     var playNode = function (node) {
-        display(node);
+        displayInfo(node);
         khl4map.addMark(node.lat, node.lon);
         var q = "";
         for (var n in node.chord) {
@@ -57,13 +56,10 @@
             $.getJSON("/play?" + q + "&callback=?").done(function (data) {
                 console.log(data);
             });
-
         }
-
-
     }
 
-    var convert = function (timestamp) {
+    var formatDate = function (timestamp) {
         var a = new Date(timestamp * 1000);
         var months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
         var year = a.getFullYear();
@@ -76,14 +72,14 @@
         return time;
     }
 
-    var changePlay = function (id) {
+    var playSelectChangeHandler = function (id) {
         switch (id) {
             case "pause":
                 $.getJSON("/play?callback=?").done(function (data) {
                     console.log(data);
                 });
-                if (playing_interval) {
-                    clearInterval(playing_interval);
+                if (playIntervalId) {
+                    clearInterval(playIntervalId);
                 }
                 console.log("p");
                 break;
@@ -91,36 +87,40 @@
                 $.getJSON("/play?callback=?").done(function (data) {
                     console.log(data);
                 });
-                if (playing_interval) {
-                    clearInterval(playing_interval);
+                if (playIntervalId) {
+                    clearInterval(playIntervalId);
                 }
                 console.log("l");
                 break;
             default:
                 $.getJSON("/recording/find?rec_id=" + id + "&callback=?").done(function (data) {
-                    now_playing = data[0].nodes;
-                    play(now_playing);
+                    currentTrack = data[0].nodes;
+                    play(currentTrack);
                 });
                 break;
         }
 
     };
-    var getList = function () {
+
+    var gridsSelectChangeHandler = function (id) {
+        khl4map.initializeMaps();
+        alert(id);
+    }
+
+
+    var populatePlaySelect = function () {
         $.getJSON("/recording/list?callback=?").done(function (data) {
-            //recordings = data;
             addOptions("select#play_select",data,"description", "recording_id");
         });
     };
 
-    var getGrids = function() {
+    var populateGridsSelect = function() {
         $.getJSON("/grid/list?callback=?").done(function (data) {
-            //grids = data;
-            addOptions("select#grid_select",data,"name", "_id");
+            addOptions("select#grid_select",data,"name", "grid_id");
         });
     };
 
-    var addOptions = function(select,data,name,value)
-    {
+    var addOptions = function(select,data,name,value) {
         var i = data.length;
         while (data[--i]) {
             $(select)
@@ -139,13 +139,17 @@
 
     $("select#play_select").change(
         function (event) {
-            changePlay(event.target.value)
+            playSelectChangeHandler(event.target.value)
+        });
+
+    $("select#grid_select").change(
+        function (event) {
+            gridsSelectChangeHandler(event.target.value)
         });
 
 
-
-    getGrids();
-    getList();
+    populateGridsSelect();
+    populatePlaySelect();
 
 })();
 
