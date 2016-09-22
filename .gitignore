@@ -29,7 +29,12 @@ node_modules
 # Debug log from npm
 npm-debug.log
 
+# Editor project files
 .idea
 
+# Database dumps
+dump/
+
+#cnfig files
 config/*.json
 
