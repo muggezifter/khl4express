@@ -27,7 +27,7 @@ var list = function (req, res) {
  */
 var start = function (req, res) {
     var query = utils.getQuery(req);
-    recorder.start(function (err, result) {
+    recorder.start(query["grid"],function (err, result) {
         if (err) {
             console.log(err);
         }
