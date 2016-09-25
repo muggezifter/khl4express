@@ -79,7 +79,7 @@ var node = function (req, res) {
     if (query['debug']) {
         utils.writeJson(res, chord.compute(query['lat'], query['lon'], Date.now(), true))
     } else {
-        var ch = chord.compute(query['lat'], query['lon'], Date.now(), false);
+        var ch = chord.compute(query['lat'], query['lon'], query['grid_id'], Date.now(), false);
         recorder.record(query['rec_id'], ch, query['lat'], query['lon']);
         utils.writeJsonp(res, query["callback"], ch)
     }
