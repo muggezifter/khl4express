@@ -27,7 +27,7 @@ var list = function (req, res) {
  */
 var start = function (req, res) {
     var query = utils.getQuery(req);
-    recorder.start(function (err, result) {
+    recorder.start(query["grid"],function (err, result) {
         if (err) {
             console.log(err);
         }
@@ -79,7 +79,7 @@ var node = function (req, res) {
     if (query['debug']) {
         utils.writeJson(res, chord.compute(query['lat'], query['lon'], Date.now(), true))
     } else {
-        var ch = chord.compute(query['lat'], query['lon'], Date.now(), false);
+        var ch = chord.compute(query['lat'], query['lon'], query['grid_id'], Date.now(), false);
         recorder.record(query['rec_id'], ch, query['lat'], query['lon']);
         utils.writeJsonp(res, query["callback"], ch)
     }

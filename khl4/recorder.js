@@ -6,11 +6,13 @@ var db = mongojs('localhost/khl', ['recordings']);
 /**
  * Start recording
  *
+ * @param grid_id
  * @param callback
  */
-var start = function (callback) {
+var start = function (grid_id, callback) {
     var data = {
         recording_id: 'R' + moment().valueOf(),
+        grid_id: grid_id,
         description: '',
         starttime: moment().unix(),
         endtime: null,
