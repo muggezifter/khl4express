@@ -16,7 +16,7 @@ var db = mongojs('localhost/khl', ['grids']);
  * @param debug
  * @returns {Array}
  */
-var compute = function (lat, lon, grid_id, time, debug) {
+var compute = function (lat, lon, grid_id, time, debug, callback) {
     db.grids.findOne({'grid_id': grid_id}, function (err, grid) {
         if (err) {
             console.log(err);
@@ -44,13 +44,15 @@ var compute = function (lat, lon, grid_id, time, debug) {
                 return point;
             });
 
-        return (debug) ? result : result.slice(0, 3) // send only necessary data to app
+        callback(
+            (debug) ? result : result.slice(0, 3) // send only necessary data to app
             .map(function (point, key) {
                 return {note: point.note, distance: point.distance, velocity: point.velocity};
             })
             .sort(function (a, b) {
                 return a.note - b.note;
-            });
+            })
+        );
     });
 }
 

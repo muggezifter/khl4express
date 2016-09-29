@@ -75,14 +75,26 @@ var find = function (req, res) {
  */
 var node = function (req, res) {
     var query = utils.getQuery(req);
+    var callback = (query['debug'])
+    ? (ch) => utils.writeJsonp(res,'callback',ch)
+    : (ch) => {
+            recorder.record(query['rec_id'], ch, query['lat'], query['lon']);
+            utils.writeJsonp(res, query["callback"], ch)
+        };
 
-    if (query['debug']) {
-        utils.writeJson(res, chord.compute(query['lat'], query['lon'], Date.now(), true))
-    } else {
-        var ch = chord.compute(query['lat'], query['lon'], query['grid_id'], Date.now(), false);
-        recorder.record(query['rec_id'], ch, query['lat'], query['lon']);
-        utils.writeJsonp(res, query["callback"], ch)
-    }
+    chord.compute(
+        query['lat'], 
+        query['lon'], 
+        query['grid_id'], 
+        Date.now(), 
+        (!! query['debug']), 
+        callback
+    );
+
+
+        // var ch = chord.compute(query['lat'], query['lon'], query['grid_id'], Date.now(), false);
+        // recorder.record(query['rec_id'], ch, query['lat'], query['lon']);
+        // utils.writeJsonp(res, query["callback"], ch)
 };
 
 
