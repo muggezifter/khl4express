@@ -5,15 +5,11 @@ var test = require('../controllers/test');
 /**
  * Test if server is available
  */
-router.get("/server", function (req, res, next) {
-    test.server(req, res);
-});
+router.get("/server",(req, res) => test.server(req, res));
 
 /**
  * Test if db is available
  */
-router.get("/db", function (req, res, next) {
-    test.db(req, res);
-});
+router.get("/db",(req, res) => test.db(req, res));
 
 module.exports = router;

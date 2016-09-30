@@ -5,36 +5,26 @@ var recording = require('../controllers/recording');
 /**
  * Start recording
  */
-router.get('/start', function(req, res) {
-    recording.start(req, res);
-});
+router.get('/start',(req, res) => recording.start(req, res));
 
 /**
  * Stop recording
  */
-router.get('/stop', function(req, res) {
-    recording.stop(req, res);
-});
+router.get('/stop',(req, res) => recording.stop(req, res));
 
 /**
  * List recordings
  */
-router.get('/list', function(req, res) {
-    recording.list(req, res);
-});
+router.get('/list',(req, res) => recording.list(req, res));
 
 /**
  * Find a recording
  */
-router.get('/find', function(req, res) {
-    recording.find(req, res);
-});
+router.get('/find',(req, res) => recording.find(req, res));
 
 /**
  * Add a mode to a recording
  */
-router.get('/node', function(req, res) {
-    recording.node(req, res);
-});
+router.get('/node',(req, res) => recording.node(req, res));
 
 module.exports = router;

@@ -6,15 +6,11 @@ var player = require('../controllers/play');
 /**
  * Show ui
  */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'KHL4 grid' });
-});
+router.get('/',(req, res) => res.render('index', { title: 'KHL4 grid' }));
 
 /**
  * Play a chord
  */
-router.get("/play", function (req, res, next) {
-  player.play(req, res);
-});
+router.get("/play",(req, res) => player.play(req, res));
 
 module.exports = router;
