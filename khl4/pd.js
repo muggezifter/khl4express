@@ -1,22 +1,22 @@
 var port = require('port');
-var config = require('../config').pd;
+var pd = require('../config').pd;
 
 /**
  * Initialize connection to pd patches
  */
-if (!process.env.NO_PD && config.enabled==='true') {
+if (!process.env.NO_PD && pd.enabled==='true') {
 
     var khl4a = new port({
-        'host': config.khl4a.host,
-        'write': config.khl4a.port
+        'host': pd.khl4a.host,
+        'write': pd.khl4a.port
     }).on('connect', function () {
             this.write('Hello khl4a;\n');
         });
     khl4a.connect();
 
     var khl4b = new port({
-        'host': config.khl4b.host,
-        'write': config.khl4b.port
+        'host': pd.khl4b.host,
+        'write': pd.khl4b.port
     }).on('connect', function () {
             this.write('Hello khl4b;\n');
         });
