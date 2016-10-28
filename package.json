@@ -17,6 +17,7 @@
     "morgan": "~1.6.1",
     "node-sass-middleware": "0.8.0",
     "port": "^0.8.1",
-    "serve-favicon": "~2.3.0"
+    "serve-favicon": "~2.3.0",
+    "muggezifter-khl4map": "github:muggezifter/khl4map"
   }
 }
