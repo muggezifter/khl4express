@@ -1,7 +1,8 @@
-var mongojs = require('mongojs');
+var mongoose = require( 'mongoose' );
+var Recording = mongoose.model('Recording');
+var Knot = mongoose.model('Knot');
 var moment = require('moment');
 
-var db = mongojs('localhost/khl', ['recordings']);
 
 /**
  * Start recording
@@ -10,16 +11,13 @@ var db = mongojs('localhost/khl', ['recordings']);
  * @param callback
  */
 var start = function (grid_id, callback) {
-    var data = {
+    Recording.create({
         recording_id: 'R' + moment().valueOf(),
         grid_id: grid_id,
         description: '',
         starttime: moment().unix(),
-        endtime: null,
-        nodes: []
-    }
-
-    db.recordings.insert(data, callback);
+        endtime: null
+    }, callback );
 };
 
 /**
@@ -29,7 +27,7 @@ var start = function (grid_id, callback) {
  * @param callback
  */
 var stop = function (rec_id, callback) {
-    db.recordings.update({recording_id: rec_id}, {$set: {endtime: moment().unix()}}, {}, callback);
+   Recording.update({recording_id: rec_id}, {$set: {endtime: moment().unix()}}, {}, callback);
 }
 
 /**
@@ -41,13 +39,17 @@ var stop = function (rec_id, callback) {
  * @param lon
  */
 var record = function (rec_id, ch, lat, lon) {
-    var nd = {
-        timestamp: moment().unix(),
+    Knot.create({
+        rec_id: rec_id,
+        date: Date.now(),
         lat: lat,
         lon: lon,
         chord: ch
-    };
-    db.recordings.update({recording_id: rec_id}, {$push: {nodes: nd}});
+    }, function (err, result) {
+        if (err) {
+            console.log(err);
+        }
+    });
 };
 
 /**
@@ -56,7 +58,7 @@ var record = function (rec_id, ch, lat, lon) {
  * @param callback
  */
 var count = function (callback) {
-    db.recordings.count(callback);
+    Recording.count(callback);
 };
 
 /**
@@ -66,7 +68,7 @@ var count = function (callback) {
  * @param callback
  */
 var find = function (rec_id, callback) {
-    db.recordings.find({recording_id: rec_id}, callback);
+    Recording.find({recording_id: rec_id}, callback);
 };
 
 /**
@@ -75,7 +77,7 @@ var find = function (rec_id, callback) {
  * @param callback
  */
 var list = function (callback) {
-    db.recordings.find({description: {$not: {$type: 10}}}, {nodes: 0}, callback);
+    Recording.find({description: {$not: {$type: 10}}}, callback);
 };
 
 

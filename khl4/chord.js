@@ -1,7 +1,7 @@
 var geographicLib = require('geographiclib');
 var geod = geographicLib.Geodesic.WGS84;
-var mongojs = require('mongojs');
-var db = mongojs('localhost/khl', ['grids']);
+var mongoose = require( 'mongoose' );
+var Grid = mongoose.model('Grid');
 
 /**
  * Compute the distances of the given lat/lon to the points defined in the points array.
@@ -17,7 +17,7 @@ var db = mongojs('localhost/khl', ['grids']);
  * @returns {Array}
  */
 var compute = function (lat, lon, grid_id, time, debug, callback) {
-    db.grids.findOne({'grid_id': grid_id}, function (err, grid) {
+    Grid.findOne({'grid_id': grid_id}, function (err, grid) {
         if (err) {
             console.log(err);
         }

@@ -5,6 +5,8 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var db = require('./khl4/model/db');
+
 var routes = require('./routes/index');
 var test = require('./routes/test');
 var recording = require('./routes/recording');

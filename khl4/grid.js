@@ -1,5 +1,5 @@
-var mongojs = require('mongojs');
-var db = mongojs('localhost/khl', ['grids']);
+var mongoose = require( 'mongoose' );
+var Grid = mongoose.model('Grid');
 
 /**
  * List all gids
@@ -7,7 +7,7 @@ var db = mongojs('localhost/khl', ['grids']);
  * @param callback
  */
 var list = function (callback) {
-    db.grids.find({},{name:1,grid_id:1}, callback);
+    Grid.find({},{name:1,grid_id:1}, callback);
 };
 
 /**
@@ -17,7 +17,7 @@ var list = function (callback) {
  * @param callback
  */
 var find = function (grid_id, callback) {
-    db.grids.find({grid_id:grid_id}, callback);
+    Grid.find({grid_id:grid_id}, callback);
 };
 
 
