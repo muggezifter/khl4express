@@ -62,13 +62,18 @@ var count = function (callback) {
 };
 
 /**
- * Find a recording by id
+ * Find the knots of a recording by rec_id
  *
  * @param rec_id
  * @param callback
  */
 var find = function (rec_id, callback) {
-    Recording.find({recording_id: rec_id}, callback);
+    //Recording.find({recording_id: rec_id}, callback);
+    Knot.find(
+        {rec_id: rec_id},
+        { lat: true, lon:true,  date: true, chord: true },
+        {sort: date},
+        callback);
 };
 
 /**
@@ -76,8 +81,10 @@ var find = function (rec_id, callback) {
  *
  * @param callback
  */
-var list = function (callback) {
-    Recording.find({description: {$not: {$type: 10}}}, callback);
+var list = function (grid_id, callback) {
+    Recording.find(
+        {grid_id: grid_id, description: {$not: {$type: 10}}},
+         callback);
 };
 
 

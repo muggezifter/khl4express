@@ -11,7 +11,7 @@ var chord = require('../khl4/chord');
  */
 var list = function (req, res) {
     var query = utils.getQuery(req);
-    recorder.list(function (err, result) {
+    recorder.list(query["grid_id"],function (err, result) {
         if (err) {
             console.log(err);
         }
