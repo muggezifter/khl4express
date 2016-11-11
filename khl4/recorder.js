@@ -72,7 +72,7 @@ var find = function (rec_id, callback) {
     Knot.find(
         {rec_id: rec_id},
         { lat: true, lon:true,  date: true, chord: true },
-        {sort: date},
+        {sort: 'date'},
         callback);
 };
 
