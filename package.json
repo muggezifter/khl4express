@@ -13,12 +13,13 @@
     "debug": "~2.2.0",
     "express": "~4.13.1",
     "geographiclib": "^1.46.0",
+    "hbs": "^4.0.1",
     "moment": "^2.13.0",
     "mongojs": "^2.4.0",
+    "mongoose": "^4.6.5",
     "morgan": "~1.6.1",
     "muggezifter-khl4map": "github:muggezifter/khl4map#v1.0.1",
     "port": "^0.8.1",
-    "serve-favicon": "~2.3.0",
-    "mongoose": "^4.6.5"
+    "serve-favicon": "~2.3.0"
   }
 }
