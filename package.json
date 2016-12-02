@@ -18,7 +18,7 @@
     "mongojs": "^2.4.0",
     "mongoose": "^4.6.5",
     "morgan": "~1.6.1",
-    "muggezifter-khl4map": "github:muggezifter/khl4map#v1.0.1",
+    "muggezifter-khl4map": "github:muggezifter/khl4map#v1.0.2",
     "port": "^0.8.1",
     "serve-favicon": "~2.3.0"
   }
