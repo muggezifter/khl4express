@@ -369,9 +369,9 @@ ms@0.7.2:
   version "0.7.2"
   resolved "https://registry.yarnpkg.com/ms/-/ms-0.7.2.tgz#ae25cf2512b3885a1d95d7f037868d8431124765"
 
-"muggezifter-khl4map@github:muggezifter/khl4map#v1.0.1":
-  version "0.0.1"
-  resolved "https://codeload.github.com/muggezifter/khl4map/tar.gz/e5bf20d54e7085b37894ec0a4ea4bad99f491429"
+"muggezifter-khl4map@github:muggezifter/khl4map#v1.0.2":
+  version "1.0.1"
+  resolved "https://codeload.github.com/muggezifter/khl4map/tar.gz/0030a4110ccd5104c3d7ee7247b09cf2e5c41aa7"
 
 muri@1.1.1:
   version "1.1.1"
