@@ -4,7 +4,7 @@ var pd = require('../config').pd;
 /**
  * Initialize connection to pd patches
  */
-if (!process.env.NO_PD && pd.enabled==='true') {
+if (process.env.NO_PD!="true" && pd.enabled) {
 
     var khl4a = new port({
         'host': pd.khl4a.host,
