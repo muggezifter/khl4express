@@ -1,7 +1,7 @@
 # khl4express
 This is the server for the [KHL4](https://github.com/muggezifter/khl4express/wiki/KHL4) multimedia installation
 
-Is is built using the [Express](https://expressjs.com/) framework. For persistance it uses [MongoDB](https://www.mongodb.com/) with [Mongoose](http://mongoosejs.com/) ODM
+It is built using the [Express](https://expressjs.com/) framework. For persistance it uses [MongoDB](https://www.mongodb.com/) with [Mongoose](http://mongoosejs.com/) ODM
 
 Start the server with `yarn start`
 
